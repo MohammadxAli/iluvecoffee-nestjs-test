@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { NestTypeOrmCommandsModule } from 'nestjs-typeorm-commands';
 
 @Module({
     imports: [
@@ -15,7 +16,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             password: 'pass123',
             database: 'postgres',
             autoLoadEntities: true,
-            synchronize: true,
+            migrations: ['dist/migrations/*.js'],
+        }),
+        NestTypeOrmCommandsModule.forRoot({
+            migrationsDir: 'src/migrations',
         }),
     ],
     controllers: [AppController],
